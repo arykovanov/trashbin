@@ -1,0 +1,72 @@
+.message-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  align-self: stretch;
+  gap: 10px;
+  width: 100%;
+  animation: messageAppear 0.3s ease-out forwards;
+}
+
+/* Request is from user, pad right in Figma */
+.message-request {
+  padding: 0px 256px 0px 0px;
+}
+
+/* Response is from bot, pad left in Figma */
+.message-response {
+  padding: 12px 0px 12px 256px;
+}
+
+.message-bubble {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  padding: 12px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border-dark);
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.message-bubble:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.message-text {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xs);
+  line-height: 1.33;
+  color: var(--color-black);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.message-response .message-text {
+  font-size: var(--font-size-sm);
+  line-height: 1.14;
+}
+
+@media (max-width: 768px) {
+  .message-request {
+    padding: 0px 40px 0px 0px;
+  }
+  .message-response {
+    padding: 12px 0px 12px 40px;
+  }
+}
+
+@keyframes messageAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

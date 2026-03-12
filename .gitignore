@@ -1,0 +1,6 @@
+.venv
+.mypy_cache
+.vscode
+server/__pycache__
+*.code-workspace
+.env
