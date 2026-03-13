@@ -65,3 +65,23 @@ npm run dev
 ```
 
 Your React frontend will be accessible, typically at `http://localhost:5173/`.
+
+### 3. Docker Deployment
+
+This project includes Dockerfiles and a Makefile for containerizing the application. The Docker image builds the frontend and serves it alongside the FastAPI backend.
+
+To build the Docker image:
+
+```bash
+# This will build the base image, build the frontend, and create the final 'llm-chat' image
+make docker_image
+```
+
+To run the Docker container:
+
+```bash
+# Don't forget to pass your environment variables (like GOOGLE_API_KEY)
+docker run -p 8000:80 --env-file .env llm-chat
+```
+
+The application will now be accessible at `http://localhost:8000`.
