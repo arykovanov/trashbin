@@ -1,12 +1,12 @@
 import os
 
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
-GOOGLE_PROJECT_ID = os.getenv("GOOGLE_PROJECT_ID", "")
 
 from langchain_core.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_core.output_parsers import StrOutputParser
 
-prompt = PromptTemplate.from_template("Tell me a joke about {topic}")
+prompt = PromptTemplate.from_template("Make funny response on the topic: {topic}")
 
 print(prompt.format(topic="cats"))
 
@@ -20,6 +20,8 @@ model = ChatGoogleGenerativeAI(
     api_key=GOOGLE_API_KEY,
 )
 
+chain = prompt | model | StrOutputParser()
+
 async def chat_with_llm(question) -> str:
-    response = await model.ainvoke(question)
-    return response.text
+    response = await chain.ainvoke({"topic": question})
+    return response

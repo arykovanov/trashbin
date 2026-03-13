@@ -35,7 +35,6 @@ Ensure there is a `.env` file in the root directory configued with your Google C
 
 ```env
 export GOOGLE_API_KEY="your_api_key_here"
-export GOOGLE_PROJECT_ID="your_project_id_here"
 ```
 
 To run the backend server:
