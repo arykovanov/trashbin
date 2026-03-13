@@ -18,17 +18,27 @@ const ChatPage = ({ onLogout }) => {
     scrollToBottom();
   }, [messages]);
 
-  const handleSend = (text) => {
+  const handleSend = async (text) => {
     const newMsg = { id: Date.now(), text, type: 'request' };
     setMessages((prev) => [...prev, newMsg]);
 
-    // Simulate bot response after a delay
-    setTimeout(() => {
+    try {
+      const response = await fetch(`/api/chat?question=${encodeURIComponent(text)}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
       setMessages((prev) => [
         ...prev, 
-        { id: Date.now(), text: "I received your message!", type: 'response' }
+        { id: Date.now(), text: data.answer, type: 'response' }
       ]);
-    }, 1000);
+    } catch (error) {
+      console.error("Error communicating with backend:", error);
+      setMessages((prev) => [
+        ...prev, 
+        { id: Date.now(), text: "Sorry, I am having trouble connecting to the server right now. Try again later.", type: 'response' }
+      ]);
+    }
   };
 
   return (

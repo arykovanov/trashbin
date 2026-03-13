@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from chat import chat_with_llm
 from pydantic import BaseModel
 from fastapi.staticfiles import StaticFiles
+import os
 
 app = FastAPI()
 
@@ -9,12 +10,17 @@ app = FastAPI()
 class ChatResponse(BaseModel):
     answer: str
 
-app.mount("/", StaticFiles(directory="static", html=True, check_dir=False), name="static")
-
 @app.get("/api/chat")
-async def chat(message: str) -> ChatResponse:
-    answer = await chat_with_llm(message)
+async def chat(question: str) -> ChatResponse:
+    answer = await chat_with_llm(question)
     return ChatResponse(answer=answer)
+
+
+if os.path.exists("static"):
+    print("Found 'static' directory")
+    app.mount("/", StaticFiles(directory="static", html=True, check_dir=False), name="static")
+else:
+    print("Did not find 'static' directory")
 
 if __name__ == "__main__":
     import argparse
